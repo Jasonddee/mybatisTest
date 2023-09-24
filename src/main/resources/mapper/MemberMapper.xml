@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tw.idv.william.web.member.mapper.MemberMapper">
+
+    <insert id="insert">
+        Insert into MEMBER(USERNAME,PASSWORD,NICKNAME,ROLE_ID)
+        values(#{username},#{password},#{nickname},#{roleId})
+    </insert>
+
+    <delete id ="deleteById">
+        delete from MEMBER where ID = #{id}}
+    </delete>
+
+    <update id="update">
+        update MEMBER
+        set
+            <if test="password != null and password !=''">
+                PASSWORD = #{password},
+            </if>
+            <if test="image != null">
+                IMAGE = #{image},
+            </if>
+            NICKNAME = #{nickname},
+            PASS = #{pass},
+            ROLE_ID = #{roleId},
+            UPDATER = #{updater},
+            LAST_UPDATED_DATE = NOW()
+        where USERNAME = #{username}
+    </update>
+
+    <select id="selectById" resultType="tw.idv.william.web.member.entity.Member">
+       select * from MEMBER where ID = #{id}
+    </select>
+
+    <select id="selectAll" resultType="tw.idv.william.web.member.entity.Member">
+        select * from MEMBER order by ID
+    </select>
+
+    <select id="selectByUsername" resultType="tw.idv.william.web.member.entity.Member">
+        select * from MEMBER where USERNAME = #{username}
+    </select>
+
+    <select id="selectForLogin" resultType="tw.idv.william.web.member.entity.Member">
+        select * from MEMBER where USERNAME = #{username} and PASSWORD = #{password}
+    </select>
+</mapper>
